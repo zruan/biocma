@@ -601,6 +601,25 @@ def iron(sequence):
     return sequence
 
 
+def combine(cma_lst):
+    """Combine equal length cma records list into a single cma record.
+    """
+    if not isinstance(cma_lst, list):
+        logging.error("cma.combine function accept a list that contain "
+                      "multiple cma dict\n")
+    if len(cma_lst) == 1:
+        return cma_lst[0]
+    else:
+        cma_rec = cma_lst[0]
+        idx = cma_rec['sequences'][-1]['index']
+        for rec in cma_lst[1:]:
+            seqs = rec['sequences']
+            for n, seq in enumerate(seqs):
+                seq['index'] = idx + n
+            cma_rec['sequences'].extend(seqs)
+    return cma_rec
+
+
 # --------------------------------------------------------------------
 
 if __name__ == '__main__':

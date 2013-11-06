@@ -368,7 +368,18 @@ def realign_seqs(block, gap_char='.', align_indels=False):
             for row in rows_need_gaps:
                 row.insert(i, gap_char)
         i += 1
-    return [''.join(row) for row in all_chars]
+    # special attention should be taken to the last several columns
+    len_set = set(map(len, all_chars))
+    if len(len_set) == 1:
+        return [''.join(row) for row in all_chars]
+    else:
+        max_len = max(len_set)
+        for row in all_chars:
+            gap_num = max_len - len(row)
+            if gap_num != 0:
+                row.append(gap_char*gap_num)
+        return [''.join(row) for row in all_chars]
+
 
 
 def consensus2block(record, level=0, name=None):

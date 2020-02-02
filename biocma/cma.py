@@ -644,19 +644,18 @@ if __name__ == '__main__':
 
     for fname in cmafiles:
         block = next(parse(fname))
-        print block['query_length'], "aa query"
-        print len(block['sequences']), "sequences"
-        print "of lengths:",
+        print(block['query_length'], "aa query")
+        print(len(block['sequences']), "sequences")
+        print("of lengths:")
         for seq in block['sequences']:
-            print "%d/%d(%d)" % (
-                len(seq['seq']), seq['length'], seq['seq'].count('-')),
-        print
-        print "  Equivalencies:"
+            print("%d/%d(%d)" % ( len(seq['seq']), seq['length'], seq['seq'].count('-')))
+        print()
+        print("  Equivalencies:")
         for idx in xrange(1, 20):
-            print idx, '=', get_equivalent_positions(block)[idx]
-        print
-        print "  Writing the file back out:"
-        print
+            print(idx, '=', get_equivalent_positions(block)[idx])
+        print()
+        print("  Writing the file back out:")
+        print()
         if len(block['sequences']) < 60:
             write(block, sys.stdout)
 
